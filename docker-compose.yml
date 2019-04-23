@@ -1,31 +1,28 @@
 version: '3.2'
 services:
-  backend1:
-      build: ./backend
+  provider1:
+      build: ./frontend
       tty: true
-      command: 'node ./index.js'
       volumes:
-        - './backend/src:/backend-dir-inside-container'
-  backend2:
-      build: ./backend
+        - './frontend/source/dist/sampleapp:/frontend-dir-inside-container'
+  provider2:
+      build: ./frontend
       tty: true
-      command: 'node ./index.js'
       volumes:
-        - './backend/src:/backend-dir-inside-container'
-  backend3:
-      build: ./backend
+        - './frontend/source/dist/sampleapp:/frontend-dir-inside-container'
+  provider3:
+      build: ./frontend
       tty: true
-      command: 'node ./index.js'
       volumes:
-        - './backend/src:/backend-dir-inside-container'
+        - './frontend/source/dist/sampleapp:/frontend-dir-inside-container'
   loadbalancer:
       build: ./load-balancer
       tty: true
       links:
-          - backend1
-          - backend2
-          - backend3
+          - provider1
+          - provider2
+          - provider3
       ports:
-          - '8080:8080'
+          - '80:80'
 volumes:
   backend:
