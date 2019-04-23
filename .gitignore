@@ -1,0 +1,11 @@
+#logs
+logs
+*.log
+npm-debug-log*
+
+#dependencies
+node_modules/
+
+#.dotenv
+.env
+.env.test
