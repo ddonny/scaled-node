@@ -1,37 +1,16 @@
 version: '3.5'
 services:
-  provider1:
-    container_name: app_1
-    build:
-      context: ./frontend
+  web:
+    image: deedonny/samplewebapp1:0.0.1
+    logging:
+      driver: "json-file"
+      options:
+          max-file: 5
+          max-size: 10m
     tty: true
-    volumes:
-      - '.:/usr/src/app'
-      - '/usr/src/app/node_modules'
     ports:
-      # - '4200:4200'
-      - '4200'
-    environment:
-      - CHOKIDAR_USEPOLLING=true
-  provider2:
-      container_name: app_2
-      build:
-        context: ./frontend
-      tty: true
-      volumes:
-        - '.:/usr/src/app'
-        - '/usr/src/app/node_modules'
-      ports:
-        - '4201'
-      environment:
-        - CHOKIDAR_USEPOLLING=true
-  loadbalancer:
-      build: ./load-balancer
-      tty: true
-      links:
-          - provider1
-          - provider2
-      ports:
-          - '8080:8080'
-volumes:
-  frontend:
+      - '4200:4200'
+    deploy:
+      replicas: 2
+      restart_policy:
+        condition: on-failure
